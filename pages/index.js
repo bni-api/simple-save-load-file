@@ -6,7 +6,7 @@ const App = () => {
   const [customers, setCustomers] = useState([])
 
   const loadData = async () => {
-    const response = await fetch("/api/read")
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/read`)
 
     if (!response.ok) alert("Failed to load data")
     else setCustomers(await response.json())
@@ -27,7 +27,7 @@ const App = () => {
   const saveData = async e => {
     e.preventDefault()
 
-    const response = await fetch("/api/save", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/save`, {
       headers: {
         "Content-Type": "application/json"
       },
@@ -38,6 +38,15 @@ const App = () => {
     if (!response.ok) alert("Error saving")
     else alert("Customer data has been saved successfully")
 
+  }
+
+  const handleDelete = async e => {
+    e.preventDefault()
+
+    const index = e.target.attributes.href.value
+    customers.splice(index, 1)
+    setCustomers(prevData => [...customers])
+    
   }
 
   useState(() => {
@@ -63,7 +72,7 @@ const App = () => {
       {
         customers.map((customer, index) => {
           return (
-            <li key={index}>{customer.name} | {customer.age}</li>
+            <li key={index}>{customer.name} | {customer.age} | <a href={index} style={{ color: 'red' }} onClick={handleDelete}>delete</a></li>
           )
         })
       }
