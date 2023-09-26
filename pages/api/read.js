@@ -12,6 +12,7 @@ const get = (req, res) => {
 const mapFunctions = {
     GET: get
 }
+
 export default (req, res) => {
     mapFunctions[req.method](req, res)
 }

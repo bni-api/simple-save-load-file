@@ -13,6 +13,7 @@ const post = (req, res) => {
 const mapFunctions = {
     POST: post
 }
+
 export default (req, res) => {
     mapFunctions[req.method](req, res)
 }
